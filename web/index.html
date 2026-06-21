@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ML Iteration Workbench</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local Machine Learning Agent</p>
+          <h1>模型迭代工作台</h1>
+        </div>
+        <div class="run-state" id="runState">
+          <span class="state-dot"></span>
+          <span>待启动</span>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="panel chat-panel">
+          <div class="panel-head">
+            <h2>对话</h2>
+            <span id="taskIdLabel">未创建任务</span>
+          </div>
+
+          <div class="chat-log" id="chatLog">
+            <article class="message assistant">
+              <div class="message-meta">Agent</div>
+              <p>告诉我训练目标并上传数据文件就行。目标列、评价指标、验证方式和迭代策略如果没有写明，我会先读数据再自行判断。</p>
+            </article>
+          </div>
+
+          <form class="composer" id="taskForm">
+            <label>
+              <span>训练需求</span>
+              <textarea
+                id="userInput"
+                rows="7"
+                placeholder="例如：这是高光谱数据，第一列为波长，第二列为波数，其余每列为对应第一行浓度标签的光谱数据。请留出两个浓度作为盲样预测，其余加入训练，尽可能迭代到最佳性能。"
+                required
+              ></textarea>
+            </label>
+
+            <label class="file-picker">
+              <span>上传 CSV / Excel</span>
+              <input id="fileUpload" type="file" accept=".csv,.xlsx,.xls" />
+              <strong id="uploadLabel">未上传文件</strong>
+            </label>
+
+            <details class="advanced-file">
+              <summary>使用本地文件路径</summary>
+              <label>
+                <span>本地文件路径，可选</span>
+                <input id="filePaths" placeholder="例如 F:\data\spectrum.csv" />
+              </label>
+            </details>
+
+            <button class="primary-button" id="startButton" type="submit">
+              <span>启动训练</span>
+            </button>
+            <button class="secondary-button" id="stopButton" type="button" disabled>
+              <span>停止任务</span>
+            </button>
+          </form>
+        </aside>
+
+        <section class="panel versions-panel">
+          <div class="panel-head">
+            <h2>训练版本</h2>
+            <span id="versionCount">0 个版本</span>
+          </div>
+
+          <div class="version-list" id="versionList">
+            <div class="empty-state">
+              <p>训练开始后，每一轮代码执行结果都会出现在这里。</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel config-panel">
+          <div class="panel-head">
+            <h2>模型配置</h2>
+            <span>OpenAI Compatible</span>
+          </div>
+
+          <div class="config-stack">
+            <div class="config-actions">
+              <button class="config-button save" id="saveConfigButton" type="button">保存配置</button>
+              <button class="config-button" id="clearConfigButton" type="button">清除配置</button>
+              <span id="configStatus">未保存</span>
+            </div>
+
+            <label>
+              <span>API Key</span>
+              <input id="apiKey" type="password" placeholder="为空则读取 .env" />
+            </label>
+            <label>
+              <span>Base URL</span>
+              <input id="baseUrl" value="https://ark.cn-beijing.volces.com/api/v3" />
+            </label>
+            <label>
+              <span>模型</span>
+              <input id="modelName" value="deepseek-v3-250324" />
+            </label>
+
+            <div class="slider-row">
+              <label>
+                <span>最大轮数</span>
+                <input id="maxRounds" type="number" min="1" max="50" value="12" />
+              </label>
+              <label>
+                <span>Temperature</span>
+                <input id="temperature" type="number" min="0" max="2" step="0.1" value="0.1" />
+              </label>
+            </div>
+
+            <label>
+              <span>Max Tokens，上限 32768</span>
+              <input id="maxTokens" type="number" min="1000" max="32768" step="1000" value="16384" />
+            </label>
+
+            <div class="report-box">
+              <div class="panel-head compact">
+                <h2>最终报告</h2>
+                <span id="reportPath">等待生成</span>
+              </div>
+              <pre id="finalReport">暂无报告</pre>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

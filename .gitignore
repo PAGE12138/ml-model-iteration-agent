@@ -1,0 +1,63 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build and package output
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# Test and type-check cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Jupyter and IPython
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# Generated model outputs and user uploads
+outputs/
+uploads/
+*.log
+*.tmp
+*.temp
+*.csv
+*.xlsx
+*.xls
+*.joblib
+*.pkl
+*.npy
+*.npz
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.docx
+
+# Local secrets and private configuration
+config.ini
+secrets.json
+api_keys.txt
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
